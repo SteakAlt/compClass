@@ -1,0 +1,64 @@
+'''
+Implement python-mysql connectivity to perform the following on employee table:
+    1) Add employee records
+    2) Update employee salary and designation
+    3) Remove selected employee records 
+    4) View all employees
+    5) Check for a specific employee
+'''
+
+import mysql.connector as sql
+
+db = sql.connect(user = "root", password = '00b', host = 'localhost', database = 'school')
+cs = db.cursor()
+
+
+
+while True:
+    print('''
+    1) Add employee records
+    2) Update employee salary and designation
+    3) Remove selected employee records 
+    4) View all employees
+    5) Check for a specific employee  
+
+    1/2/3/4/5
+''')
+
+    choice = int(input("Enter choice: "))
+
+    if(choice == 1):
+        a = int(input("Enter employee code: "))
+        b = input("Enter employee name: ")
+        c= input("Enter employee designation: ")
+        d = int(input("Enter employee salary: "))
+        
+        cs.execute("insert into employee values(%s, '%s', '%s', %s)" %(a,b,c,d))
+        db.commit()
+        
+    elif(choice == 2):
+        c = int(input("Enter employee code: "))
+        a = input("Enter designation of employee: ")
+        b = int(input("Enter salary of employee: "))
+        
+        cs.execute("update employee set designation = '%s', salary = %s where empcode = %s" %(a,b,c))
+        db.commit()
+        
+    elif(choice == 3):
+        a = int(input("Enter employee code: "))
+        cs.execute(f"delete from employee where empcode = {a}")
+        db.commit()
+        
+    elif choice == 4:
+        cs.execute("SELECT * from employee")
+        t = cs.fetchall()
+        for i in t:
+            print(i)
+            
+    elif choice ==5:
+        a = int(input("Enter employee code: "))
+        cs.execute(f"SELECT * FROM EMPLOYEE WHERE empcode = {a}")
+        print(cs.fetchone())
+        
+    elif choice == 6:
+        break
