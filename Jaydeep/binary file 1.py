@@ -1,5 +1,6 @@
 import pickle
 
+
 def addRecord():
     f = open('teacher.dat', 'wb')
     n = int(input("Enter number of records: "))
@@ -9,8 +10,9 @@ def addRecord():
         b = input('Enter teacher\'s name: ')
         c = int(input("Enter teacher's salary: "))
 
-        pickle.dump([a,b,c],f)
+        pickle.dump([a, b, c], f)
     f.close()
+
 
 def readRecord():
     f = open("teacher.dat", 'rb')
@@ -24,6 +26,7 @@ def readRecord():
         except EOFError:
             break
 
+
 def searchRecord():
     f = open("teacher.dat", 'rb')
     a = int(input("Enter teacher code: "))
@@ -31,7 +34,7 @@ def searchRecord():
     while True:
         try:
             data = pickle.load(f)
-            if(data[0] == a):
+            if (data[0] == a):
                 print("Record found!")
                 print("Teacher name:", data[1])
                 print("Teacher salary:", data[2])
@@ -39,6 +42,7 @@ def searchRecord():
         except EOFError:
             print("Record doesn't exist")
             break
+
 
 def countRecord():
     f = open("teacher.dat", 'rb')
@@ -52,31 +56,35 @@ def countRecord():
 
     print(c)
 
+
 def updateRecord():
     a = int(input("Enter teacher code to update: "))
+    f = open("teacher.dat", "rb")
+    l = []
+
     while True:
-        f = open("teacher.dat", "rb")
         try:
             data = pickle.load(f)
-            if(data[0] == a):
+            if (data[0] == a):
                 choice = int(input("Enter 1 to update name, and 2 to update salary: "))
-                if(choice == 1):
+                if (choice == 1):
                     name = input("Enter new teacher name: ")
                     data[1] = name
-                elif(choice == 2):
+                elif (choice == 2):
                     salary = int(input("Enter new salary: "))
                     data[2] = salary
                 else:
                     print("Invalid choice")
-                
-            f = open("teacher.dat", "wb")
-            pickle.dump(data, f)
-            f.close()
+            else:
+                continue
+            l.append(data)
 
         except EOFError:
             break
 
+    for i in l:
+        f = open("teacher.dat", "wb")
+        pickle.dump(i, f)
         f.close()
 
-updateRecord()
-readRecord()
+
