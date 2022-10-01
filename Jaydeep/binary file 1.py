@@ -105,11 +105,32 @@ def deleteRecord():
     f.close()
 
 
-addRecord()
-readRecord()
-searchRecord()
-countRecord()
-updateRecord()
-readRecord()
-deleteRecord()
-readRecord()
+while True:
+    print("1. Add record")
+    print("2. Read record")
+    print("3. Search record")
+    print("4. Count record")
+    print("5. Update record")
+    print("6. Delete record")
+    print("7. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        addRecord()
+    elif choice == 2:
+        readRecord()
+    elif choice == 3:
+        searchRecord()
+    elif choice == 4:
+        countRecord()
+    elif choice == 5:
+        updateRecord()
+    elif choice == 6:
+        deleteRecord()
+    elif choice == 7:
+        break
+    else:
+        print("Invalid choice")
+
+    print()
