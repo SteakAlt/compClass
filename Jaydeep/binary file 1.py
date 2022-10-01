@@ -54,7 +54,7 @@ def countRecord():
         except EOFError:
             break
 
-    print(c)
+    print("Number of teacher records: ", c)
 
 
 def updateRecord():
@@ -75,16 +75,41 @@ def updateRecord():
                     data[2] = salary
                 else:
                     print("Invalid choice")
-            else:
-                continue
             l.append(data)
 
         except EOFError:
             break
 
+    f = open("teacher.dat", "wb")
     for i in l:
-        f = open("teacher.dat", "wb")
         pickle.dump(i, f)
-        f.close()
+    f.close()
 
 
+def deleteRecord():
+    a = int(input("Enter teacher code to delete: "))
+    f = open("teacher.dat", "rb")
+    l = []
+
+    while True:
+        try:
+            data = pickle.load(f)
+            if data[0] != a:
+                l.append(data)
+        except EOFError:
+            break
+
+    f = open("teacher.dat", "wb")
+    for i in l:
+        pickle.dump(i, f)
+    f.close()
+
+
+addRecord()
+readRecord()
+searchRecord()
+countRecord()
+updateRecord()
+readRecord()
+deleteRecord()
+readRecord()
