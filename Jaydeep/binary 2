@@ -1,0 +1,99 @@
+import pickle
+
+def addRecord():
+    n = int(input("Enter number of records: "))
+    f = open('product.dat', 'wb')
+    for i in range(n):
+        a = int(input("Enter item number: "))
+        b = input("Enter item name: ")
+        c = int(input("Enter item price: "))
+
+        pickle.dump({
+            "itemNo": a,
+            "ItemName": b,
+            "Price": c
+        }, f)
+    f.close()
+
+def readRecord():
+    f = open('product.dat', 'rb')
+    while True:
+        try:
+            data = pickle.load(f)
+            print(data)
+        except EOFError:
+            break
+    
+
+def searchRecord():
+    f = open('product.dat', 'rb')
+    a = int(input("Enter item code: "))
+
+    while True:
+        try:
+            data = pickle.load(f)
+            if(data['itemNo'] == a):
+                print("Item name: ", data['ItemName'])
+                print("Price: ", data['Price'])
+        except EOFError:
+            break
+
+def countRecord():
+    f = open('product.dat', 'rb')
+    a = 0
+
+    while True:
+        try:
+            pickle.load(f)
+            a+=1
+        except EOFError:
+            break
+
+    print(a)
+
+def updateRecord():
+    f = open('product.dat', 'rb')
+    l = []
+    a = int(input("Enter item number: "))
+
+    while True:
+        try:
+            data = pickle.load(f)
+            if(data['itemNo'] == a):
+                c = int(input("Enter 1 to update item name, and 2 to update item price: "))
+                if(c==1):
+                    data["ItemName"] = input("Enter item name: ")
+                elif(c==2):
+                    data["Price"] = int(input("Enter item price: "))
+
+            l.append(data)
+        except EOFError:
+            break
+    f.close()
+
+    f = open("product.dat", 'wb')
+    for i in l:
+        pickle.dump(i, f)
+    f.close()
+
+def deleteRecord():
+    f = open('product.dat', 'rb')
+    l = []
+    a = int(input("Enter item number: "))
+
+    while True:
+        try:
+            data = pickle.load(f)
+            if(data['itemNo'] == a):
+                continue
+
+            l.append(data)
+        except EOFError:
+            break
+    f.close()
+
+    f = open("product.dat", 'wb')
+    for i in l:
+        pickle.dump(i, f)
+    f.close()
+
